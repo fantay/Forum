@@ -8,6 +8,8 @@ package jpatest.entity;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,27 +20,41 @@ import javax.persistence.Id;
  */
 @Entity
 public class Util implements Serializable {
-
-     /* 
-         champ ID de la table 
+    
+    /*
+        enumeration des types de données
     */
+    public enum UtilType{
+        
+        NORMAL,
+        MODERATEUR,
+        ADMIN
+    }
+
+    /* 
+         champ ID de la table 
+     */
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     /*
         champ de la table 
-    */
-    @Column(nullable = false,length = 32, unique = true)
+     */
+    @Column(nullable = false, length = 32, unique = true)
     private String login;
-    
-    @Column(nullable = false,length = 32)
+
+    @Column(nullable = false, length = 32)
     private String motDepasse;
+    
+    @Enumerated(EnumType.STRING)
+    private UtilType utilType;
+    
 
     /* 
         Getter et setter 
-    */
+     */
     public String getLogin() {
         return login;
     }
@@ -63,10 +79,9 @@ public class Util implements Serializable {
         this.id = id;
     }
 
-    
     /* 
         script genere pour la creation de la table 
-    */
+     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -91,5 +106,5 @@ public class Util implements Serializable {
     public String toString() {
         return "jpatest.entity.Util[ id=" + id + " ]";
     }
-    
+
 }
